@@ -1,4 +1,7 @@
 ﻿
+using blog.c2s.azurite.Entities;
+using blog.c2s.azurite.Extensions;
+using blog.c2s.azurite.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -13,10 +16,15 @@ namespace blog.c2s.endpoints.RequestDelegates.Environment
         {
             var serviceProvider = context.RequestServices;
             var logger = serviceProvider.GetService<ILogger<PostUserDelegate>>();
-            var requestBody = await context.Request.ReadFromJsonAsync<object>();
+            var azureTableService = serviceProvider.GetService<IAzureTableService>();
             try
             {
-                context.Response.StatusCode = (int)HttpStatusCode.NoContent;
+                var newUser = await context.FromBody<User>();
+                newUser.Id = Guid.NewGuid();
+
+                await azureTableService.InsertStoredUserAsync(newUser, context.RequestAborted);
+
+                context.NoContent();
             }
             catch (Exception ex)
             {

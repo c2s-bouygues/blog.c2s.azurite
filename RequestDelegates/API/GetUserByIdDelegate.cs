@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using blog.c2s.azurite.Extensions;
+using blog.c2s.azurite.Services.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Primitives;
 using System;
 using System.Net;
 
@@ -13,11 +14,22 @@ namespace blog.c2s.endpoints.RequestDelegates.Environment
         {
             var serviceProvider = context.RequestServices;
             var logger = serviceProvider.GetService<ILogger<GetUserByIdDelegate>>();
+            var azureTableService = serviceProvider.GetService<IAzureTableService>();
             try
             {
                 // On récupère l'Id depuis la route
-                var stringValues = context.Request.RouteValues["id"].ToString();
-                context.Response.StatusCode = (int)HttpStatusCode.NoContent;
+                var userId = context.FromRoute<Guid>("id");
+
+                var user = await azureTableService.GetStoredUserByIdAsync(userId, context.RequestAborted);
+                if (user == null)
+                {
+                    context.NotFound();
+                    return;
+                }
+                else
+                {                    
+                    await context.OK(user.User);
+                }
             }
             catch (Exception ex)
             {

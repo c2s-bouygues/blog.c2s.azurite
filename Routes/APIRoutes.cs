@@ -6,9 +6,9 @@ namespace blog.c2s.endpoints.Routes
 {
     public static class APIRoutes
     {
-        private const string _apiName = "api/environments";
+        private const string _apiName = "api/users";
 
-        internal static IEndpointRouteBuilder UseEnvironmentEndpoints(this IEndpointRouteBuilder endpoints)
+        internal static IEndpointRouteBuilder UseUsersEndpoints(this IEndpointRouteBuilder endpoints)
         {
             endpoints.MapGet($"/{_apiName}", GetUsersDelegate.Delegate);
 
