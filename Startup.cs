@@ -1,11 +1,11 @@
-using blog.c2s.azurite.Extensions;
+using blog.c2s.azurite.Services;
+using blog.c2s.azurite.Services.Interfaces;
 using blog.c2s.endpoints.Routes;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.Reflection;
 
 namespace blog.c2s.endpoints
 {
@@ -43,7 +43,7 @@ namespace blog.c2s.endpoints
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
-            {                
+            {
                 endpoints.UseUsersEndpoints();
             });
         }

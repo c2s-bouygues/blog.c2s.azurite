@@ -1,5 +1,4 @@
-﻿
-using blog.c2s.azurite.Extensions;
+﻿using blog.c2s.azurite.Extensions;
 using blog.c2s.azurite.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,13 +23,14 @@ namespace blog.c2s.endpoints.RequestDelegates.Environment
                 {
                     context.NotFound();
                     return;
-                }else if (!users.Any())
+                }
+                else if (!users.Any())
                 {
                     context.NoContent();
                     return;
                 }
                 else
-                {                    
+                {
                     await context.OK(users.Select(x => x.User));
                 }
             }

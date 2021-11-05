@@ -40,7 +40,6 @@ namespace blog.c2s.azurite.Extensions
                 : null;
         }
 
-
         public static T? FromQuery<T>(this HttpContext context, string name)
             where T : struct
         {

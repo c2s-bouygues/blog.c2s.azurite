@@ -11,7 +11,9 @@ namespace blog.c2s.azurite.Entities
         public string Response { get; set; }
         public DateTimeOffset ExpirationDate { get; set; }
 
-        public StoredUser() { }
+        public StoredUser()
+        {
+        }
 
         public StoredUser(User userBase)
         {

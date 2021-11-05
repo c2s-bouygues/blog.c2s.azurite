@@ -1,5 +1,4 @@
-﻿
-using blog.c2s.azurite.Entities;
+﻿using blog.c2s.azurite.Entities;
 using blog.c2s.azurite.Extensions;
 using blog.c2s.azurite.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
